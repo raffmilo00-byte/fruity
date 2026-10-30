@@ -109,17 +109,6 @@ src/app/
 ├── app.config.ts
 └── app.routes.ts
 public/                              # file statici
-```
-
-## 📸 Screenshot
-
-_Inserire le immagini nella cartella `screenshots/` e poi:_
-
-```markdown
-![Home](./screenshots/home.png)
-![Elenco frutti](./screenshots/list.png)
-![Dettaglio frutto](./screenshots/detail.png)
-```
 
 ## 👨‍💻 Autore
 
