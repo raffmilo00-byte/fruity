@@ -1,0 +1,65 @@
+<main class="container">
+  <h1>Fruity App 🍎</h1>
+  <p class="subtitle">
+    Scopri i valori nutrizionali dei frutti e scegli un'alimentazione più sana e plant based.
+  </p>
+
+  <input
+    type="search"
+    class="search"
+    placeholder="Cerca un frutto (es. banana)..."
+    [value]="searchTerm()"
+    (input)="onSearch($event)"
+  />
+
+  <p class="count">Frutti trovati: {{ filteredFruits().length }}</p>
+
+  @if (loading()) {
+    <p>Caricamento in corso...</p>
+  }
+
+  @if (error()) {
+    <p class="error">Errore nel caricamento dei dati. Riprova più tardi.</p>
+  }
+
+  <div class="layout">
+    <ul class="fruit-list">
+      @for (fruit of filteredFruits(); track fruit.id) {
+        <li
+          [class.active]="selectedFruit()?.id === fruit.id"
+          (click)="selectFruit(fruit)"
+        >
+          <strong>{{ fruit.name }}</strong>
+          <span class="family">{{ fruit.family }}</span>
+        </li>
+      } @empty {
+        @if (!loading() && !error()) {
+          <li class="empty">Nessun frutto trovato</li>
+        }
+      }
+    </ul>
+
+    <section class="details">
+      @if (selectedFruit(); as fruit) {
+        <h2>{{ fruit.name }}</h2>
+        <p>Famiglia: {{ fruit.family }} · Genere: {{ fruit.genus }} · Ordine: {{ fruit.order }}</p>
+
+        <table>
+          <thead>
+            <tr><th>Valore nutrizionale</th><th>Quantità</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Calorie</td><td>{{ fruit.nutritions.calories }} kcal</td></tr>
+            <tr><td>Grassi</td><td>{{ fruit.nutritions.fat }} g</td></tr>
+            <tr><td>Zuccheri</td><td>{{ fruit.nutritions.sugar }} g</td></tr>
+            <tr><td>Carboidrati</td><td>{{ fruit.nutritions.carbohydrates }} g</td></tr>
+            <tr><td>Proteine</td><td>{{ fruit.nutritions.protein }} g</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Valori per 100 g di prodotto.</p>
+      } @else {
+        <p>Seleziona un frutto dalla lista per vedere i valori nutrizionali.</p>
+      }
+    </section>
+  </div>
+</main>

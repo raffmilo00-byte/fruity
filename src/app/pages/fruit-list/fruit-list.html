@@ -1,0 +1,21 @@
+<h2>Lista Frutti</h2>
+
+@for (fruit of fruits; track fruit.id) {
+  <div>
+    <h3>{{ fruit.name }}</h3>
+
+    <p>Famiglia: {{ fruit.family }}</p>
+    <p>Ordine: {{ fruit.order }}</p>
+    <p>Genere: {{ fruit.genus }}</p>
+
+    <ul>
+      <li>Calorie: {{ fruit.nutritions.calories }}</li>
+      <li>Carboidrati: {{ fruit.nutritions.carbohydrates }}</li>
+      <li>Proteine: {{ fruit.nutritions.protein }}</li>
+      <li>Grassi: {{ fruit.nutritions.fat }}</li>
+      <li>Zuccheri: {{ fruit.nutritions.sugar }}</li>
+    </ul>
+
+    <hr>
+  </div>
+}
