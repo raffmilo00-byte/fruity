@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, isDevMode } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Fruit } from '../../models/fruit';
 
 @Injectable({
@@ -11,12 +11,27 @@ export class FruitService {
   private http = inject(HttpClient);
 
   private apiUrl = '/api/fruit';
+  private snapshotUrl = '/fruits.json';
 
   getAllFruits(): Observable<Fruit[]> {
-    return this.http.get<Fruit[]>(`${this.apiUrl}/all`);
+    if (isDevMode()) {
+      return this.http.get<Fruit[]>(`${this.apiUrl}/all`);
+    }
+    return this.http.get<Fruit[]>(this.snapshotUrl);
   }
 
   getFruitByName(name: string): Observable<Fruit> {
-    return this.http.get<Fruit>(`${this.apiUrl}/${encodeURIComponent(name)}`);
+    if (isDevMode()) {
+      return this.http.get<Fruit>(`${this.apiUrl}/${encodeURIComponent(name)}`);
+    }
+    return this.getAllFruits().pipe(
+      map(fruits => {
+        const fruit = fruits.find(f => f.name.toLowerCase() === name.toLowerCase());
+        if (!fruit) {
+          throw new Error('Frutto non trovato');
+        }
+        return fruit;
+      })
+    );
   }
 }
