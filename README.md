@@ -90,20 +90,7 @@ JSON
 "changeOrigin": true
 }
 }
-📸 Screenshots
 
-Add screenshots of:
-
-Home page
-Fruit detail page
-Custom 404 page
-
-Example:
-
-Markdown
-![Home Page](./screenshots/home.png)
-![Fruit Detail](./screenshots/detail.png)
- 
 🎯 Learning Objectives
 
 This project was built to practice:
