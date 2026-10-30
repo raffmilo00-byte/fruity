@@ -1,118 +1,126 @@
-🍎 Fruity App
+# 🍎 Fruity App
 
-A modern Angular application that fetches and displays fruit information using the FruityVice API.
+Applicazione web Angular che mostra l'elenco dei frutti e i loro valori nutrizionali, usando l'API pubblica [FruityVice](https://www.fruityvice.com). L'obiettivo è incentivare un'alimentazione più sana e plant based.
 
-🚀 Features
-Display a list of fruits
-View detailed information for each fruit
-Angular Routing
-HTTP requests with HttpClient
-Dynamic navigation between pages
-Error handling
-Not Found page (404)
-Responsive layout
-API integration using FruityVice
-🛠️ Technologies Used
-Angular
-TypeScript
-HTML5
-CSS3
-RxJS
-Angular Router
-Angular HttpClient
-FruityVice API
-📂 Project Structure
-Plain Text
-src/
-├── app/
-│ ├── models/
-│ │ └── fruit.ts
-│ ├── pages/
-│ │ ├── home/
-│ │ ├── fruit-detail/
-│ │ └── not-found/
-│ ├── services/
-│ │ └── fruit.service.ts
-│ ├── app.config.ts
-│ └── app.routes.ts
-│
-├── assets/
-├── styles.css
-└── main.ts
-🌐 API
+**Demo online:** _inserire qui il link Firebase dopo il deploy_
 
-The project uses the public FruityVice API:
+## 🚀 Funzionalità
 
-Plain Text
-https://www.fruityvice.com
- 
+1. **Elenco dei frutti**: tutti i frutti vengono caricati dall'endpoint FruityVice `/api/fruit/all`.
+2. **Barra di ricerca**: scrivendo il nome di un frutto (in inglese, ad esempio `banana`) la lista si filtra in tempo reale.
+3. **Valori nutrizionali**: selezionando un frutto si vedono calorie, grassi, zuccheri, carboidrati e proteine (valori per 100 g).
+4. **Pagina di dettaglio**: pagina dedicata a ogni frutto, raggiungibile tramite routing Angular.
+5. **Gestione degli errori**: viene mostrato un messaggio se l'API non è raggiungibile.
+6. **Pagina 404**: pagina personalizzata per i percorsi inesistenti.
+7. **Layout responsive**: si adatta a computer e smartphone.
 
-Example endpoint:
+## 🛠️ Tecnologie e librerie utilizzate
 
-Plain Text
-/api/fruit/all
-⚙️ Installation
+| Libreria | Utilizzo |
+|---|---|
+| Angular | Framework (componenti standalone, signals, router) |
+| TypeScript | Linguaggio |
+| RxJS | Gestione asincrona delle chiamate HTTP |
+| Angular HttpClient | Chiamate all'API FruityVice |
+| Angular Router | Navigazione tra le pagine |
+| Firebase CLI (`firebase-tools`) | Deploy su Firebase Hosting |
 
-Clone the repository:
+Servizio esterno: [FruityVice API](https://www.fruityvice.com).
 
-Shell
-git clone https://github.com/TUO-USERNAME/fruity-app.git
+## ✅ Prerequisiti
 
-Move into the project folder:
+- [Node.js](https://nodejs.org) (versione LTS) e npm
+- Angular CLI: `npm install -g @angular/cli`
+- Git
 
-Shell
-cd fruity-app
+## ⚙️ Avviare il progetto in locale
 
-Install dependencies:
+1. Clona il repository:
+   ```bash
+   git clone https://github.com/raffmilo00-byte/fruity.git
+   ```
+2. Entra nella cartella del progetto:
+   ```bash
+   cd fruity
+   ```
+3. Installa le dipendenze:
+   ```bash
+   npm install
+   ```
+4. Avvia il server di sviluppo:
+   ```bash
+   ng serve
+   ```
+5. Apri `http://localhost:4200` nel browser.
 
-Shell
-npm install
+## 🔄 CORS e proxy (sviluppo)
 
-Start the development server:
+L'API FruityVice non permette chiamate dirette dal browser (politica CORS). In sviluppo il server di Angular fa da proxy:
 
-Shell
-ng serve
+- L'app chiama l'URL relativo `/api/fruit/all`.
+- `proxy.conf.json` inoltra ogni richiesta che inizia con `/api` a `https://www.fruityvice.com`:
 
-Open:
-
-Plain Text
-http://localhost:4200
- 
-🔄 Development Notes
-
-To avoid CORS issues during development, the application uses an Angular proxy configuration:
-
-JSON
+```json
 {
-"/api": {
-"target": "https://www.fruityvice.com",
-"secure": true,
-"changeOrigin": true
+  "/api": {
+    "target": "https://www.fruityvice.com",
+    "secure": true,
+    "changeOrigin": true
+  }
 }
+```
+
+- In `angular.json` il proxy è attivato in `architect > serve > options`:
+
+```json
+"options": {
+  "proxyConfig": "proxy.conf.json"
 }
+```
 
-🎯 Learning Objectives
+**Importante:** il proxy funziona solo con `ng serve`. Se modifichi `proxy.conf.json`, ferma il server (`Ctrl + C`) e riavvialo.
 
-This project was built to practice:
+## ☁️ Deploy su Firebase
 
-Angular fundamentals
-Standalone Components
-Routing
-Services
-Dependency Injection
-API consumption
-TypeScript interfaces
-Project organization
-👨‍💻 Author
+_Descrivere qui la soluzione scelta (snapshot statico `fruits.json` oppure Cloud Function come proxy) e i comandi:_
 
-Raff
+```bash
+npm install -g firebase-tools
+firebase login
+firebase init hosting
+ng build
+firebase deploy
+```
 
-GitHub:
+## 📂 Struttura del progetto
 
-Plain Text
-https://github.com/TUO-USERNAME
-📄 License
+```
+src/app/
+├── core/services/fruit.service.ts   # chiamate all'API
+├── models/                          # interfacce Fruit e Nutrition
+├── pages/
+│   ├── home/
+│   ├── fruit-list/
+│   ├── fruit-detail/
+│   └── not-found/
+├── shared/
+│   ├── navbar/
+│   └── fruit-card/
+├── app.config.ts
+└── app.routes.ts
+public/                              # file statici
+```
 
-This project is open source and available under the MIT License.
+## 📸 Screenshot
 
-⭐ If you like this project, consider giving it a star on GitHub!
+_Inserire le immagini nella cartella `screenshots/` e poi:_
+
+```markdown
+![Home](./screenshots/home.png)
+![Elenco frutti](./screenshots/list.png)
+![Dettaglio frutto](./screenshots/detail.png)
+```
+
+## 👨‍💻 Autore
+
+Raff · [github.com/raffmilo00-byte](https://github.com/raffmilo00-byte)
