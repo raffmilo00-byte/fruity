@@ -1,59 +1,131 @@
-# FruityApp
+🍎 Fruity App
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.4.
+A modern Angular application that fetches and displays fruit information using the FruityVice API.
 
-## Development server
+🚀 Features
+Display a list of fruits
+View detailed information for each fruit
+Angular Routing
+HTTP requests with HttpClient
+Dynamic navigation between pages
+Error handling
+Not Found page (404)
+Responsive layout
+API integration using FruityVice
+🛠️ Technologies Used
+Angular
+TypeScript
+HTML5
+CSS3
+RxJS
+Angular Router
+Angular HttpClient
+FruityVice API
+📂 Project Structure
+Plain Text
+src/
+├── app/
+│ ├── models/
+│ │ └── fruit.ts
+│ ├── pages/
+│ │ ├── home/
+│ │ ├── fruit-detail/
+│ │ └── not-found/
+│ ├── services/
+│ │ └── fruit.service.ts
+│ ├── app.config.ts
+│ └── app.routes.ts
+│
+├── assets/
+├── styles.css
+└── main.ts
+🌐 API
 
-To start a local development server, run:
+The project uses the public FruityVice API:
 
-```bash
+Plain Text
+https://www.fruityvice.com
+ 
+
+Example endpoint:
+
+Plain Text
+/api/fruit/all
+⚙️ Installation
+
+Clone the repository:
+
+Shell
+git clone https://github.com/TUO-USERNAME/fruity-app.git
+
+Move into the project folder:
+
+Shell
+cd fruity-app
+
+Install dependencies:
+
+Shell
+npm install
+
+Start the development server:
+
+Shell
 ng serve
-```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open:
 
-## Code scaffolding
+Plain Text
+http://localhost:4200
+ 
+🔄 Development Notes
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+To avoid CORS issues during development, the application uses an Angular proxy configuration:
 
-```bash
-ng generate component component-name
-```
+JSON
+{
+"/api": {
+"target": "https://www.fruityvice.com",
+"secure": true,
+"changeOrigin": true
+}
+}
+📸 Screenshots
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Add screenshots of:
 
-```bash
-ng generate --help
-```
+Home page
+Fruit detail page
+Custom 404 page
 
-## Building
+Example:
 
-To build the project run:
+Markdown
+![Home Page](./screenshots/home.png)
+![Fruit Detail](./screenshots/detail.png)
+ 
+🎯 Learning Objectives
 
-```bash
-ng build
-```
+This project was built to practice:
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Angular fundamentals
+Standalone Components
+Routing
+Services
+Dependency Injection
+API consumption
+TypeScript interfaces
+Project organization
+👨‍💻 Author
 
-## Running unit tests
+Raff
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+GitHub:
 
-```bash
-ng test
-```
+Plain Text
+https://github.com/TUO-USERNAME
+📄 License
 
-## Running end-to-end tests
+This project is open source and available under the MIT License.
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+⭐ If you like this project, consider giving it a star on GitHub!
