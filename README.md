@@ -2,7 +2,7 @@
 
 Applicazione web Angular che mostra l'elenco dei frutti e i loro valori nutrizionali, usando l'API pubblica [FruityVice](https://www.fruityvice.com). L'obiettivo è incentivare un'alimentazione più sana e plant based.
 
-**Demo online:** _inserire qui il link Firebase dopo il deploy_
+**Demo online:** [https://fruityvice-b63b2.web.app](https://fruityvice-b63b2.web.app)
 
 ## 🚀 Funzionalità
 
@@ -10,7 +10,7 @@ Applicazione web Angular che mostra l'elenco dei frutti e i loro valori nutrizio
 2. **Barra di ricerca**: scrivendo il nome di un frutto (in inglese, ad esempio `banana`) la lista si filtra in tempo reale.
 3. **Valori nutrizionali**: selezionando un frutto si vedono calorie, grassi, zuccheri, carboidrati e proteine (valori per 100 g).
 4. **Pagina di dettaglio**: pagina dedicata a ogni frutto, raggiungibile tramite routing Angular.
-5. **Gestione degli errori**: viene mostrato un messaggio se l'API non è raggiungibile.
+5. **Gestione degli errori**: viene mostrato un messaggio se i dati non sono raggiungibili.
 6. **Pagina 404**: pagina personalizzata per i percorsi inesistenti.
 7. **Layout responsive**: si adatta a computer e smartphone.
 
@@ -82,7 +82,20 @@ L'API FruityVice non permette chiamate dirette dal browser (politica CORS). In s
 
 ## ☁️ Deploy su Firebase
 
-_Descrivere qui la soluzione scelta (snapshot statico `fruits.json` oppure Cloud Function come proxy) e i comandi:_
+L'applicazione è pubblicata su Firebase Hosting: [https://fruityvice-b63b2.web.app](https://fruityvice-b63b2.web.app).
+
+**Come funzionano i dati in produzione.** Il proxy esiste solo con `ng serve`, quindi online non è disponibile e il browser non può chiamare direttamente FruityVice (CORS). Per questo, in produzione l'app legge `public/fruits.json`, uno **snapshot** dei dati scaricato da `/api/fruit/all`. Il servizio `fruit.service.ts` sceglie la sorgente con `isDevMode()`:
+
+- sviluppo (`ng serve`): chiamata live all'API tramite proxy
+- produzione (`ng build`): lettura di `/fruits.json`
+
+Per aggiornare lo snapshot (PowerShell):
+
+```powershell
+Invoke-WebRequest -Uri "https://www.fruityvice.com/api/fruit/all" -OutFile "public\fruits.json"
+```
+
+Per pubblicare su un proprio progetto Firebase:
 
 ```bash
 npm install -g firebase-tools
@@ -92,11 +105,13 @@ ng build
 firebase deploy
 ```
 
+Alle domande di `firebase init hosting`: cartella pubblica `dist/fruity-app/browser`, single-page app **sì**, build automatiche con GitHub **no**, sovrascrivere `index.html` **no**.
+
 ## 📂 Struttura del progetto
 
 ```
 src/app/
-├── core/services/fruit.service.ts   # chiamate all'API
+├── core/services/fruit.service.ts   # chiamate all'API / snapshot
 ├── models/                          # interfacce Fruit e Nutrition
 ├── pages/
 │   ├── home/
@@ -108,7 +123,10 @@ src/app/
 │   └── fruit-card/
 ├── app.config.ts
 └── app.routes.ts
-public/                              # file statici
+public/                              # file statici (favicon, fruits.json)
+proxy.conf.json                      # proxy per lo sviluppo
+firebase.json                        # configurazione Firebase Hosting
+```
 
 ## 👨‍💻 Autore
 
